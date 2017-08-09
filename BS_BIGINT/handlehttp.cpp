@@ -106,6 +106,7 @@ size_t make_http_content(char *command, char **buf) //根据get提供的文件�
 		memcpy(&tmp[iheadlen], contentbuf, icontentlen); //安装消息体
 		memcpy(&tmp[iheadlen + icontentlen], TAIL, itaillen); //安装消息尾
 		printf("headbuf:\n%s", headbuf);
+		//printf("\n%s", contentbuf);
 		if (contentbuf)
 		{
 			free(contentbuf);
