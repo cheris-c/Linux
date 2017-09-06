@@ -53,7 +53,7 @@ int createsem(const char *pathname, int proj_id, int members, int init_val)
 
 int main()
 {
-    createsem(".", 32, 2, 43);
+    createsem(".", 32, 2, 43); //可以通过ipcs命令查看创建好的信号量
 
     return 0;
 }
