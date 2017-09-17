@@ -1,0 +1,21 @@
+#include <stdlib.h>
+void abort();
+    abort()函数用来向进程发送SIGABRT信号，如果进程设置信号处理函数以捕捉SIGABRT信号，且信号处理函数
+不返回（如使用longjmp），则abort()能终止进程。abort()终止进程时，所有打开的流（如I/O流、文件流）均会
+被刷新和关闭。如果进程设置了SIGABRT被阻塞或忽略，abort()将覆盖这些设置。
+    man手册中的一句话：
+	If the SIGABRT signal is ignored, or caught by a handler that returns, the abort() function
+will still terminate the process. It does this by restoring the default disposition for SIGABRT and 
+then raising the signal for a second time.
+
+#include <signal.h>
+int sigemptyset(sigset_t *set); //初始化一个信号集，使其不包括任何信号
+int sigfillset(sigset_t *set);	//初始化一个信号集，使其包括所有信号
+int sigaddset(sigset_t *set, ing signum);   //用来向set指定的信号集中添加由signum指定的信号
+int sigdelset(sigset_t *set, int signum));  //用来从set指定的信号集中删除由signum指定的信号
+int sigismember(const sigset_t *set, int signum);   //测试信号signum是否包括在set指定的信号集中
+    函数sigemptyset、sigfillset、sigaddset以及sigdelset在执行成功时返回0，失败返回-1。函数sigismember
+返回1表示测试的信号在信号集中，返回0表示测试的信号不在信号集中，出错返回-1.
+    所有应用程序在使用信号集前，要对该信号集调用一次sigemptyset或sigfillset以初始化信号集。
+
+

@@ -63,11 +63,8 @@ int main()
 {
     time_t now;
     setdaemon();
-    syslog(LOG_USER|LOG_INFO, "测试守护进程\n");
     while(1)
     {
 	sleep(8);
-	time(&now);
-	syslog(LOG_USER|LOG_INFO, "系统时间：\t%s\t\t\n", ctime(&now));
     }
 }
