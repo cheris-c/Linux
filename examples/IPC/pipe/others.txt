@@ -1,0 +1,26 @@
+#include <unistd.h>
+int dup(int oldfd);
+int dup2(int oldfd, int newfd);
+    dup和dup2系统调用都可以用来复制文件描述符。
+    dup和dup2函数调用成功时返回一个oldfd文件描述符的副本，失败则返回-1，所不同的是由dup函数
+返回的文件描述符时当前可用文件描述符中的最小数值，而dup2函数则可以利用参数newfd指定欲返回的
+文件描述符。如果newfd指定的文件描述符被打开，系统先将其关闭，然后将oldfd指定的文件描述符赋值
+到该参数。如果newfd等于oldfd，则dup2返回newfd，而不关闭它。
+    可见dup2将close操作和文件描述符拷贝操作集成在同一个函数里，而且它保证操作具有原子性。
+    两者之间的对比，请参考如下程序片段：
+    dup:
+	pid = fork();
+	if (pid == 0)
+	{
+	    close(1);	//关闭子进程的标准输出
+	    dup(fd[1]);	//复制管道输入端到标准输出, 返回最小可用的文件描述符
+	    execve("exam", argv, environ);
+	}
+
+    dup2:
+	pid = fork();
+	if (pid == 0)
+	{
+	    dup2(1, fd[1]); //关闭标准输出并复制管道输出端
+	    execve("exam", argv, environ);
+	}

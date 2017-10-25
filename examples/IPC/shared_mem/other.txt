@@ -1,0 +1,31 @@
+
+int shmget(key_t key, size_t size, int shmgflg);
+    参数key是由ftok()得到的键值；参数size以字节为单位指定内存的大小；shmflg为操作标志位，可取值如下：
+        IPC_CREAT: 调用shmget时，系统将此值与其他所有共享内存区的key进行比较，如果存在相同的key，说
+    明共享内存区已存在，此时返回该共享内存区的标识符，否则新建一个共享内存区并返回其标识符。
+        IPC_EXCL: 该宏必须和IPC_CREAT一起使用，否则没有意义。当shmflg取IPC_CREAT | IPC_EXCL时，表示
+    如果发现信号集已存在，则返回-1，错误码为EEXIST。
+    note: 当创建一个新的共享内存区时，size的值必须大于0；如果是访问一个已存在的共享内存区，置size为0。
+
+void* shmat(int shmid, const void *shmaddr, int shmflg);
+    通过shmat函数将共享内存附加到进程的地址空间，使进程与共享内存建立连接。
+    shmat调用成功返回一个指向共享内存的指针，使用该指针就可以访问共享内存区；失败则返回-1.
+    参数shmid为shmget的返回值；shmflg为存取权限标志；shmaddr为共享内存附加点。参数shmaddr
+不同取值含义不同：
+        1. 如果为空，则由内核选择一个空闲的内存区；如果非空，返货地址取决于调用者是否给shmflg
+    指定了SHM_RND值，如果没有指定，则共享内存区附加到shmaddr指定的地址；否则附加地址为shmaddr
+    向下舍入一个共享内存低端边界地址后的地址（SHMLBA，一个常址）。
+        2. 通常将shmaddr设置为NULL。
+
+int shmdt(const void *shmaddr);
+    通过shmdt函数使进程断开与共享内存区的连接。
+    参数shmaddr为shmat函数的返回值。该函数调用成功后，返回0，否则返-1。进程脱离共享内存区后，数据结构
+shmid_ds中的shm_nattch减一。但是共享内存区仍然存在。只有在shm_nattch为0后，即没有任何进程再使用该共享
+内存区，共享内存区才在内核中被删除。一般来说，当一个进程终止，它所附加的共享内存区都会自动脱离。
+
+int shmctl(int shmid, int cmd, struct shmid_ds *buf);
+    通过shmctl函数来对共享内存区进行控制。
+    参数shmid为共享内存区的标识符；buf为指向shmid_ds结构体的指针；cmd为操作标志位，支持以下3种控制操作:
+        IPC_RMID: 从系统中删除由shmid标识的共享内存区。
+        IPC_SET : 设置共享内存区的shmid_ds结构
+        IPC_STAT: 读取共享内存区的信息，保存至buf指向的结构体中。
