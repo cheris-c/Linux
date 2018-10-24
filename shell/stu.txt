@@ -1,0 +1,3 @@
+ID    Name      Linux  MySQL
+2     Sc         88     55
+3     Gao        77     90
