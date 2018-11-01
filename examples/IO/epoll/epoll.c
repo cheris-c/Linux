@@ -4,12 +4,11 @@
 #define MAX_EVENT_SIZE 1024
 #define MAX_CLIENT_SIZE 5
 
-void do_epoll(int sock);
+void do_epoll();
 int main()
 {
-    int sockSer = startup(SERVER_IP, SERVER_PORT);
-    do_epoll(sockSer);
-    close(sockSer);
+    do_epoll();
+    
     return 0;
 }
 
@@ -21,8 +20,9 @@ void add_event(int epoll_fd, int fd, int state)
     epoll_ctl(epoll_fd, EPOLL_CTL_ADD, fd, &ev);
 }
 
-void do_epoll(int sock)
-{
+void do_epoll()
+{ 
+    int sockSer = startup(SERVER_IP, SERVER_PORT);
     struct epoll_event event[MAX_EVENT_SIZE];
     int epoll_fd = epoll_create(MAX_CLIENT_SIZE);
     add_event(epoll_fd, sock, EPOLLIN);
@@ -63,6 +63,8 @@ void do_epoll(int sock)
             }
         }
     }
+
+    close(sockSer);
 }
 
 
