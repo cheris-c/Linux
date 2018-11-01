@@ -1,0 +1,37 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+BODYBUF	work.h	12;"	d
+CC	makefile	/^CC=g++$/;"	m
+CLIENTCOUNT	work.h	11;"	d
+EXEC	makefile	/^EXEC=qqserverd$/;"	m
+OBJS	makefile	/^OBJS=$(SRCS:.cpp=.o)$/;"	m
+PUB_H_	pub.h	9;"	d
+SRCS	makefile	/^SRCS=qqserver.cpp\\$/;"	m
+WORK_H_	work.h	9;"	d
+auth_passwd	work.cpp	/^int work::auth_passwd(int userid, const char *passwd)\/\/验证用户密码$/;"	f	class:work
+body	work.h	/^	char body[BODYBUF];$/;"	m	struct:msg_t
+broadcast_user_status	work.cpp	/^void work::broadcast_user_status() \/\/向socket_client[]数组中所有client广播用户状态消息$/;"	f	class:work
+catch_Signal	pub.cpp	/^void catch_Signal(int Sign)$/;"	f
+fix_socket_client	work.cpp	/^void work::fix_socket_client(int index, int st) $/;"	f	class:work
+head	work.h	/^	unsigned char head[4];$/;"	m	struct:msg_t
+listen_st	work.h	/^	int listen_st;$/;"	m	class:work
+loginmsg	work.cpp	/^void work::loginmsg(int st, int o_userid, const char *passwd) \/\/处理login消息$/;"	f	class:work
+main	qqserver.cpp	/^int main(int arg, char *args[])$/;"	f
+msg_t	work.h	/^struct msg_t$/;"	s
+run	work.cpp	/^void work::run()$/;"	f	class:work
+sendmsg	work.cpp	/^void work::sendmsg(const struct msg_t *msg, ssize_t msglen) \/\/处理send消息$/;"	f	class:work
+setdaemon	pub.cpp	/^void setdaemon()$/;"	f
+setnonblocking	pub.cpp	/^int setnonblocking(int st) \/\/将socket设置为非阻塞$/;"	f
+signal1	pub.cpp	/^int signal1(int signo, void (*func)(int))$/;"	f
+socket_accept	pub.cpp	/^int socket_accept(int listen_st)$/;"	f
+socket_client	work.h	/^	int socket_client[CLIENTCOUNT]; \/\/申明socket_client数组，管理client的socket连接$/;"	m	class:work
+socket_create	pub.cpp	/^int socket_create(int port)\/\/创建参数port指定端口号的server端socket$/;"	f
+socket_recv	work.cpp	/^int work::socket_recv(int st)$/;"	f	class:work
+user_logout	work.cpp	/^void work::user_logout(int st) \/\/client socket连接断开$/;"	f	class:work
+work	work.cpp	/^work::work(int port)$/;"	f	class:work
+work	work.h	/^class work$/;"	c
+~work	work.cpp	/^work::~work()$/;"	f	class:work
