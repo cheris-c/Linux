@@ -1,0 +1,3 @@
+division.o: lib/division.cpp lib/division.h
+
+lib/division.h:
